@@ -12,10 +12,10 @@ function ResultPage() {
         return <p>결과 데이터가 없습니다. 다시 분석해주세요.</p>;
     }
 
-    // 🔥 백엔드 summary 구조 기준으로 수정
+    // 기준: 백엔드 summary 구조
     const { summary, requirementsFile, submissionFile } = state;
 
-    // 🔥 백엔드는 summary.details 로 결과를 보냄
+    // summary.details 로 결과 전송
     const results = summary.details ?? [];
 
     const convertStatus = (status) => {
@@ -27,7 +27,6 @@ function ResultPage() {
         }
     };
 
-    // 🔥 점수 계산 로직 - unfulfilled → notFulfilled 로 수정
     const total = summary.fulfilled + summary.partial + summary.notFulfilled;
     const finalScore = total > 0
         ? ((summary.fulfilled + summary.partial * 0.5) / total) * 100
@@ -46,6 +45,8 @@ function ResultPage() {
             a.remove();
             URL.revokeObjectURL(url);
 
+            // no-unused-vars 오류 ?
+            // eslint-disable-next-line no-unused-vars
         } catch (e) {
             alert("보고서 다운로드 중 오류 발생");
         }
@@ -64,8 +65,6 @@ function ResultPage() {
                 <div className="summary-stats">
                     <div><b>충족:</b> {summary.fulfilled}</div>
                     <div><b>부분 충족:</b> {summary.partial}</div>
-
-                    {/* 🔥 수정됨: unfulfilled → notFulfilled */}
                     <div><b>미충족:</b> {summary.notFulfilled}</div>
                 </div>
 
@@ -84,7 +83,6 @@ function ResultPage() {
                         onClick={() =>
                             setSelected({
                                 ...r,
-                                // 🔥 evidence 없으면 reason 또는 “근거 없음”
                                 evidence:
                                     r.evidence && r.evidence.trim() !== ""
                                         ? r.evidence
@@ -118,7 +116,6 @@ function ResultPage() {
 
                         <div className="modal-section">
                             <b>근거</b>
-                            {/* 🔥 이제 evidence 항상 존재함 */}
                             <p>{selected.evidence}</p>
                         </div>
 

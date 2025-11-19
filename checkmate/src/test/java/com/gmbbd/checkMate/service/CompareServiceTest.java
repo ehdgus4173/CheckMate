@@ -9,20 +9,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * CompareService에 대한 단위 테스트.
- *  - 요구사항과 과제 텍스트를 넣었을 때
- *    FULFILLED / PARTIAL / NOT_FULFILLED 판단이
- *    우리가 예상한 대로 나오는지 확인한다.
+ * CompareService 단위 테스트
+ * FULFILLED / PARTIAL / NOT_FULFILLED 가
+ * 예상대로 나오나 확인
  */
 class CompareServiceTest {
 
     @Test
     void evaluateByKeywordMatch_fulfilledCase() {
-        // given: 요구사항 1개
         Requirement req1 = new Requirement(1L, "시스템 개요를 설명하시오.");
         List<Requirement> requirements = List.of(req1);
 
-        // 과제 텍스트: 요구사항의 단어들이 충분히 들어있는 경우
+        // 과제: 요구사항의 단어들이 충분히 들어있는 경우
         String assignmentText = """
                 본 보고서에서는 시스템의 전체적인 개요를 충분히 설명하고,
                 구성 요소와 동작 방식을 자세히 기술하였다.
@@ -44,11 +42,10 @@ class CompareServiceTest {
 
     @Test
     void evaluateByKeywordMatch_notFulfilledCase() {
-        // given: 요구사항 1개
         Requirement req1 = new Requirement(1L, "ERD 다이어그램을 포함하시오.");
         List<Requirement> requirements = List.of(req1);
 
-        // 과제 텍스트: ERD 관련 내용이 전혀 없는 경우
+        // 과제: ERD 관련 내용이 전혀 없는 경우
         String assignmentText = """
                 이 보고서는 시스템의 성능 측정 결과와 테스트 케이스만을 포함한다.
                 데이터베이스 다이어그램에 대한 설명은 포함하지 않았다.
@@ -69,11 +66,10 @@ class CompareServiceTest {
 
     @Test
     void evaluateByKeywordMatch_partialCase() {
-        // given
         Requirement req1 = new Requirement(1L, "요구분석 방법론을 두 가지 이상 기술하시오.");
         List<Requirement> requirements = List.of(req1);
 
-        // 과제 텍스트: 일부 키워드는 있지만, 완전하진 않은 경우
+        // 과제: 일부 키워드는 있지만, 완전하진 않은 경우
         String assignmentText = """
                 이 보고서에서는 요구분석 방법론 중 하나만 간단히 언급하였다.
                 다른 방법론에 대해서는 자세히 기술하지 않았다.

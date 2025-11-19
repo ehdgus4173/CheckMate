@@ -45,9 +45,7 @@ public class ParseService {
         }
     }
 
-    // -------------------------
     // PDF 파싱 (PDFBox)
-    // -------------------------
     private String parsePdf(InputStream inputStream) throws IOException {
         try (PDDocument pdf = PDDocument.load(inputStream)) {
             PDFTextStripper stripper = new PDFTextStripper();
@@ -55,9 +53,7 @@ public class ParseService {
         }
     }
 
-    // -------------------------
     // DOCX 파싱
-    // -------------------------
     private String parseDocx(InputStream inputStream) throws IOException {
         try (XWPFDocument doc = new XWPFDocument(inputStream)) {
             StringBuilder sb = new StringBuilder();
@@ -66,9 +62,7 @@ public class ParseService {
         }
     }
 
-    // -------------------------
     // TXT 파싱
-    // -------------------------
     private String parseTxt(InputStream inputStream) throws IOException {
         return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
     }

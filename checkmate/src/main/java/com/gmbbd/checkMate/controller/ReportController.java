@@ -6,12 +6,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController                           // 이 클래스가 REST API 엔드포인트 집합임을 선언
-@RequiredArgsConstructor                  // final 필드를 자동으로 생성자 주입
-@RequestMapping("/api")                   // 컨트롤러 공통 URL prefix
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api")
 public class ReportController {
 
-    private final ReportService reportService; // 보고서 생성 로직을 담당하는 서비스
+    private final ReportService reportService; // 보고서 생성
 
     @PostMapping(
             value = "/report",

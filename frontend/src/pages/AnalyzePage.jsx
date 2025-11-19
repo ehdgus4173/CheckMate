@@ -1,5 +1,3 @@
-// src/pages/AnalyzePage.jsx
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { analyzeRequest } from "../api/checkMateApi.js";
@@ -93,15 +91,10 @@ function AnalyzePage() {
                     <img
                         src={logo}
                         alt="logo"
-                        style={{ height: "110px" }}   // 필요하면 수정 가능
+                        style={{ height: "110px" }}
                     />
                 </div>
             </nav>
-
-            {/* 홈 버튼 */}
-            <button className="home-button" onClick={() => navigate("/")}>
-                ← 홈으로
-            </button>
 
             {/* 중앙 컨텐츠 */}
             <div className="analyze-container">
