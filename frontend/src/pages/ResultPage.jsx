@@ -1,5 +1,3 @@
-// src/pages/ResultPage.jsx
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { downloadReport } from "../api/checkMateApi.js";
@@ -91,22 +89,19 @@ function ResultPage() {
                     <img
                         src={logo}
                         alt="logo"
-                        style={{ height: "110px" }}   // 필요하면 수정 가능
+                        style={{ height: "110px" }}
                     />
                 </div>
             </nav>
 
-            {/* MAIN */}
             <div className="result-container">
 
-                {/* HERO */}
                 <section className="result-hero">
                     <h1 className="result-title">분석 결과 요약</h1>
                     <p className="result-subtitle">요구사항 충족 여부와 근거를 확인해보세요.</p>
                     <div className="result-divider"></div>
                 </section>
 
-                {/* SUMMARY */}
                 <section className="summary-card">
                     <div className="summary-left">
                         <div className="summary-label">최종 점수</div>
@@ -140,7 +135,6 @@ function ResultPage() {
                     </div>
                 </section>
 
-                {/* DETAIL HEADER */}
                 <section className="detail-header">
                     <h2 className="detail-title">요구사항별 상세 결과</h2>
                     <p className="detail-subtitle">
@@ -148,7 +142,6 @@ function ResultPage() {
                     </p>
                 </section>
 
-                {/* DETAIL LIST */}
                 <section className="result-list">
                     {results.map((r, idx) => (
                         <div
@@ -171,7 +164,6 @@ function ResultPage() {
                     ))}
                 </section>
 
-                {/* MODAL */}
                 {selected && (
                     <div className="modal-bg" onClick={() => setSelected(null)}>
                         <div className="modal-box" onClick={(e) => e.stopPropagation()}>
@@ -199,7 +191,6 @@ function ResultPage() {
                     </div>
                 )}
 
-                {/* RESTART */}
                 <button className="restart-btn" onClick={() => navigate("/")}>
                     새로 분석하기
                 </button>

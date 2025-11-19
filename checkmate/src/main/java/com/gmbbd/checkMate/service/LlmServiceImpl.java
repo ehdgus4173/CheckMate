@@ -21,18 +21,18 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class LlmServiceImpl implements LlmService {
 
-    private final WebClient openAiWebClient;   // OpenAIConfig에서 주입
-    private final ObjectMapper objectMapper;   // 스프링 Bean 재사용
+    private final WebClient openAiWebClient;   // OpenAIConfig
+    private final ObjectMapper objectMapper;   // 스프링 Bean
 
     @Value("${openai.model:gpt-4o-mini}")
     private String model;
 
     @Override
     public EvaluationResult evaluateRequirement(String requirementText, String documentText) {
-        // 1) 프롬프트 생성 (템플릿 + 공백 정리)
+        // 프롬프트 생성
         String prompt = buildPrompt(requirementText, documentText);
 
-        // 2) OpenAI 요청 Payload
+        // OpenAI 요청
         Map<String, Object> requestBody = Map.of(
                 "model", model,
                 "temperature", 0,
@@ -44,7 +44,7 @@ public class LlmServiceImpl implements LlmService {
                 )
         );
 
-        // 3) WebClient 호출
+        // WebClient 호출
         String rawResponse = openAiWebClient.post()
                 .uri("/chat/completions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +56,7 @@ public class LlmServiceImpl implements LlmService {
                 )
                 .block();
 
-        // 4) JSON 파싱 → EvaluationResult 변환
+        // JSON 파싱 → EvaluationResult
         return parseEvaluationResult(rawResponse, requirementText, null);
     }
 
@@ -64,7 +64,7 @@ public class LlmServiceImpl implements LlmService {
         String safeReq = (req == null) ? "" : req.trim();
         String safeSubmission = (submission == null) ? "" : submission;
 
-        // 불필요한 공백/개행 정리 (내용 누락 없이 정규화만)
+        // 공백 정리
         String normalizedReq = normalizeText(safeReq);
         String normalizedSubmission = normalizeText(safeSubmission);
 
@@ -74,7 +74,7 @@ public class LlmServiceImpl implements LlmService {
 
             try (InputStream is = resource.getInputStream()) {
                 String template = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-                // 템플릿의 %s 두 군데에 순서대로 채움: 요구사항, 문서내용
+                // 프롬프트의 %s 두 군데에 순서대로 요구사항, 문서내용 채우기
                 return template.formatted(normalizedReq, normalizedSubmission);
             }
         } catch (IOException e) {
@@ -85,8 +85,8 @@ public class LlmServiceImpl implements LlmService {
     }
 
     /**
-     * 여러 개의 공백/개행/탭을 하나의 공백으로 줄이고, 양 끝 공백을 제거.
-     * 내용 자체는 자르지 않고, 표현만 정리한다.
+     * 공백/개행/탭을 하나의 공백으로 줄이고 양 끝 공백 제거
+     * 내용 X, 표현만 정리
      */
     private String normalizeText(String text) {
         if (text == null) {
@@ -98,10 +98,9 @@ public class LlmServiceImpl implements LlmService {
     }
 
     /**
-     * OpenAI 응답(JSON 문자열)을 파싱해서 EvaluationResult로 변환.
-     * content 안에 LLM이 반환한 JSON이 들어 있다고 가정한다.
+     * OpenAI 응답(JSON 문자열)을 EvaluationResult로 변환
      *
-     * 기대 JSON 예시:
+     * JSON 형식:
      * {
      *   "status": "FULFILLED",
      *   "score": 0.85,
@@ -134,7 +133,6 @@ public class LlmServiceImpl implements LlmService {
                 throw new IllegalStateException("OpenAI 응답에서 content를 찾을 수 없습니다.");
             }
 
-            // content 내부를 JSON으로 파싱한다고 가정
             JsonNode resultJson = objectMapper.readTree(content);
 
             String status = resultJson.path("status").asText("NOT_FULFILLED");
@@ -145,8 +143,8 @@ public class LlmServiceImpl implements LlmService {
             String reason = resultJson.path("reason").asText(evidence); // reason이 없으면 evidence로 대체
 
             return new EvaluationResult(
-                    requirementId,          // 일단 여기서는 null 또는 evaluateAll에서 세팅한 값
-                    requirementText,        // 현재 평가 중인 요구사항 원문
+                    requirementId,          // 현재 구조로는 항상 null
+                    requirementText,
                     status,
                     score,
                     matchedKeywordCount,

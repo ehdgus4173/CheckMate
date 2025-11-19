@@ -10,21 +10,11 @@ public class ValidationService {
     private static final long MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
     /**
-     * (수정됨)
-     * 업로드된 MultipartFile을 검증하기 위한 메서드.
-     * 🔥 기존에는 MultipartFile을 임시 파일로 저장하고(File 기반 검증 재사용)
-     *    File.tempPath → multipartFile.transferTo()로 인해
-     *    원본 temp 파일이 삭제되어 이후 파싱 단계에서 FileNotFoundException이 발생했음.
-     *
-     * 🔥 해결:
-     *    - 임시 파일 생성 로직 완전 제거
-     *    - transferTo() 절대 금지
-     *    - MultipartFile 자체의 정보로 검증 수행
-     *
+     * MultipartFile 검증
      * 검증 내용:
-     *  - null / empty 체크
+     *  - null / empty
      *  - 파일 크기 제한
-     *  - 확장자(pdf/docx/txt) 체크
+     *  - 확장자(pdf/docx/txt)
      */
     public void validateFile(MultipartFile multipartFile) {
         if (multipartFile == null || multipartFile.isEmpty()) {
@@ -49,16 +39,4 @@ public class ValidationService {
         }
     }
 
-    /**
-     * (원본)
-     * 파싱된 텍스트의 길이/내용을 검증하는 메서드.
-     */
-    public void validateText(String text) {
-        if (text == null || text.isBlank()) {
-            throw new ApiException("파싱된 텍스트가 비어 있습니다.");
-        }
-        if (text.length() < 20) {
-            throw new ApiException("텍스트가 너무 짧아 분석이 불가능합니다.");
-        }
-    }
 }

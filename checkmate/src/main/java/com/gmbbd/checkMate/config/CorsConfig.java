@@ -15,7 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
-                                "http://localhost:5173",                // 로컬 Vite dev 서버
+                                "http://localhost:5173",                // 로컬
                                 "https://checkmate-front.onrender.com"  // Render
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")

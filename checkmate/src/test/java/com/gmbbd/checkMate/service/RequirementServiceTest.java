@@ -8,15 +8,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * RequirementService에 대한 단위 테스트.
- *  - 요구사항 텍스트를 넣었을 때
- *    우리가 기대한 개수만큼 Requirement가 잘 만들어지는지 확인한다.
+ * RequirementService 단위 테스트
+ * 요구사항 텍스트를 넣었을 때 Requirement의 개수 확인
  */
 class RequirementServiceTest {
 
     @Test
     void extractRequirements_basicCase() {
-        // given: 테스트용 요구사항 텍스트 (PDF에서 뽑혔다고 가정)
         String reqText = """
                 1. 시스템 개요를 설명하시오.
                 2. ERD 다이어그램을 포함하시오.

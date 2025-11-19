@@ -8,23 +8,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * RequirementService
- *  - PDF/DOCX 텍스트에서 "요구사항 항목"을 찾아서 Requirement 리스트로 변환하는 서비스.
- *
- *  기존에는 아주 제한된 번호 패턴(1. / 1) / (1) / - 등)만 인식했지만,
- *  아래 구현은 더 다양한 번호/불릿 패턴을 포괄적으로 인식하고,
- *  앞의 번호·기호를 제거한 "본문"만 저장한다.
- */
+// PDF/DOCX 텍스트에서 "요구사항 항목"을 찾아서 Requirement 리스트로 변환
 @Service
 public class RequirementService {
 
-    /**
-     * 인식할 요구사항 패턴들
-     *
-     * 그룹 구조:
-     *  - 각 패턴의 "마지막 그룹"이 실제 요구사항 본문이 되도록 설계했다.
-     */
+
+    // 인식할 요구사항 패턴
     private static final List<Pattern> REQUIREMENT_PATTERNS = List.of(
             // 1. 내용 / 1) 내용 / 1 - 내용 / 1 내용 / 1.1. 내용 / 1.2.3 내용 ...
             Pattern.compile("^\\s*(\\d+(?:\\.\\d+)*)(?:[\\.)-])?\\s+(.+)$"),
@@ -32,13 +21,13 @@ public class RequirementService {
             // (1) 내용 / [1] 내용 / (A) 내용 / a) 내용 ...
             Pattern.compile("^\\s*[\\[\\(]?(\\d+|[A-Za-z])[\\]\\)]?\\)?\\s+(.+)$"),
 
-            // • 내용 / ● 내용 / - 내용 / * 내용 (앞에 불릿 기호 하나 + 공백)
+            // • 내용 / ● 내용 / - 내용 / * 내용 (앞에 기호 하나 + 공백)
             Pattern.compile("^\\s*[•●\\-\\*]\\s+(.+)$")
     );
 
     /**
-     * 한 줄에서 요구사항 본문을 추출.
-     *  - 어떤 패턴에도 맞지 않으면 null 반환.
+     * 한 줄에서 요구사항 본문을 추출
+     *  - 어떤 패턴에도 맞지 않으면 null 반환
      */
     private String extractRequirementBody(String line) {
         String trimmed = line.trim();
@@ -66,7 +55,7 @@ public class RequirementService {
 
     /**
      * 요구사항 텍스트를 줄 단위로 나누고,
-     * 번호/불릿 패턴으로 시작하는 줄들을 Requirement 리스트로 변환한다.
+     * 번호/불릿 패턴으로 시작하는 줄들을 Requirement 리스트로 변환
      * 11/17 번호 없이 줄글로 입력된 경우 fallback 로직 추가
      */
     public List<Requirement> extractRequirements(String requirementText) {
@@ -79,7 +68,7 @@ public class RequirementService {
         String[] lines = requirementText.split("\\r?\\n");
         long id = 1L;
 
-        // 1차 패스: 번호/불릿 패턴
+        // 1차: 번호/불릿 패턴
         for (String line : lines) {
             String body = extractRequirementBody(line);
             if (body == null) {
@@ -88,16 +77,16 @@ public class RequirementService {
             requirements.add(new Requirement(id++, body));
         }
 
-        // 번호/불릿에서 아무것도 못 찾았으면 → 줄글 fallback
+        // 번호/불릿에서 아무것도 못 찾았으면 줄글 fallback
         if (requirements.isEmpty()) {
-            // 2차 패스: 문장 단위로 잘라서 요구사항으로 사용
-            // 마침표/물음표/느낌표 + 줄바꿈 기준으로 대략 문장 분리
+            // 2차: 문장 단위로 잘라서 요구사항으로 사용
+            // 마침표/물음표/느낌표 + 줄바꿈 기준으로 문장 분리
             String[] sentences = requirementText.split("(?<=[\\.?!。！？])\\s+|\\r?\\n");
 
             id = 1L;
             for (String s : sentences) {
                 String trimmed = s.trim();
-                // 너무 짧은 것(예: 제목, 단어 한두 개)은 제외
+                // 너무 짧은 것 제외
                 if (trimmed.length() < 10) {
                     continue;
                 }

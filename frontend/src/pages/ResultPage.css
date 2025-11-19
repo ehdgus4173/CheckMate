@@ -1,15 +1,11 @@
-/* ==============================
-   GLOBAL ROOT (업로드/Analyze와 통일)
-============================== */
+/* GLOBAL ROOT (업로드/Analyze와 통일)*/
 .result-root {
     background: #F7F8FC;
     min-height: 100vh;
     font-family: "Pretendard", sans-serif;
 }
 
-/* ==============================
-   NAVBAR (공통)
-============================== */
+/* NAVBAR (공통) */
 .navbar {
     width: 100%;
     height: 58px;
@@ -30,9 +26,7 @@
     opacity: 0.85;
 }
 
-/* ==============================
-   RESULT MAIN CONTAINER
-============================== */
+/* 결과 - 메인 컨테이너 */
 .result-container {
     max-width: 1000px;
     width: calc(100% - 40px);
@@ -40,9 +34,7 @@
     margin: 110px auto 80px;
 }
 
-/* ==============================
-   HERO SECTION
-============================== */
+/* HERO 섹션 */
 .result-hero {
     text-align: center;
     margin-bottom: 36px;
@@ -68,9 +60,7 @@
     margin: 26px auto 0;
 }
 
-/* ==============================
-   EMPTY CARD (ERROR)
-============================== */
+/* EMPTY CARD (에러) */
 .empty-card {
     background: white;
     border-radius: 16px;
@@ -79,9 +69,7 @@
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* ==============================
-   SUMMARY CARD
-============================== */
+/* SUMMARY 카드 */
 .summary-card {
     display: flex;
     gap: 32px;
@@ -166,7 +154,7 @@
     background: #d04848;
 }
 
-/* DOWNLOAD BUTTON */
+/* 다운로드 버튼 */
 .download-btn {
     align-self: flex-end;
 
@@ -191,9 +179,7 @@
     transform: translateY(-2px);
 }
 
-/* ==============================
-   DETAIL HEADER
-============================== */
+/* DETAIL HEADER */
 .detail-header {
     margin-bottom: 16px;
 }
@@ -209,9 +195,7 @@
     color: #777;
 }
 
-/* ==============================
-   DETAIL LIST
-============================== */
+/* DETAIL LIST */
 .result-list {
     display: flex;
     flex-direction: column;
@@ -235,7 +219,7 @@
     box-shadow: 0 7px 20px rgba(0,0,0,0.10);
 }
 
-/* TEXT */
+/* 텍스트 */
 .result-main {
     display: flex;
     align-items: flex-start;
@@ -280,9 +264,7 @@
     color: #d04848;
 }
 
-/* ==============================
-   MODAL
-============================== */
+/* MODAL */
 .modal-bg {
     position: fixed;
     inset: 0;
@@ -325,7 +307,7 @@
     color: #333;
 }
 
-/* CLOSE BUTTON */
+/* CLOSE 버튼 */
 .modal-close {
     width: 100%;
     padding: 12px 0;
@@ -361,9 +343,7 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* ==============================
-   RESTART BUTTON
-============================== */
+/* RESTART 버튼 */
 .restart-btn {
     width: 100%;
     padding: 14px 0;
@@ -403,9 +383,7 @@
     background: #2A4AEC;
 }
 
-/* ==============================
-   FOOTER (공통)
-============================== */
+/* FOOTER (공통) */
 .footer {
     background: #1E2448;
     color: white;

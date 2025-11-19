@@ -54,7 +54,6 @@ function UploadPage() {
 
     return (
         <>
-            {/* 로딩 화면 */}
             {loading && (
                 <div className="loading-overlay">
                     <div className="loading-box">
@@ -64,7 +63,6 @@ function UploadPage() {
                 </div>
             )}
 
-            {/* NAV */}
             <nav className="navbar">
                 <div
                     className="nav-left"
@@ -74,12 +72,11 @@ function UploadPage() {
                     <img
                         src={logo}
                         alt="logo"
-                        style={{height: "110px"}}   // 필요하면 수정 가능
+                        style={{height: "110px"}}
                     />
                 </div>
             </nav>
 
-            {/* HERO */}
             <div className="hero-section">
                 <div className="hero-title"><img
                     src={logo_main}
@@ -90,19 +87,13 @@ function UploadPage() {
                 <p className="hero-subtitle">
                     제출할 문서를 요구사항과 비교하여 충족 여부를 분석합니다.
                 </p>
-                {/*<p className="hero-content">*/}
-                {/*    - 요구사항 문서를 왼쪽 블럭에 드롭<br />*/}
-                {/*    - 제출 문서를 오른쪽 블럭에 드롭*/}
-                {/*</p>*/}
                 <div className="hero-full-divider"/>
             </div>
 
-            {/* 업로드 */}
             <div className="upload-wrapper">
 
                 <div className="upload-container">
 
-                    {/* REQUIREMENTS */}
                     <div className="upload-card">
                         <div className="card-title">📘 요구사항 문서</div>
 
