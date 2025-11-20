@@ -1,6 +1,7 @@
 # CheckMate
 
 ### AI 기반 요구사항 자동 검증 웹 서비스
+URL: https://checkmate-front.onrender.com
 
 ---
 ## 1. 소개
@@ -74,15 +75,15 @@ CheckMate는 요구사항 문서와 제출물을 자동으로 비교하여
 ## 5. 실행 방법
 ### Frontend
 ```
-   cd CheckMate/frontend
-   npm install
-   npm run dev
+   > cd CheckMate/frontend
+   > npm install
+   > npm run dev
 ```
 
 ### Backend
 ```
-   cd CheckMate/checkmate
-   ./gradlew bootRun
+   > cd CheckMate/checkmate
+   > ./gradlew bootRun
 ```
 
 ---
